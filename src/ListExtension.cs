@@ -20,7 +20,7 @@ public static class ListExtension
         //if list contains multiple items that match the predicate
         //or check for nullability of list and etc ...
 
-        if (list.None())
+        if (list.Empty())
             return;
 
         int oldItemIndex = list.FindIndex(oldItemSelector);
@@ -38,7 +38,7 @@ public static class ListExtension
         //if list contains multiple items that match the predicate
         //or check for nullability of list and etc ...
 
-        if (list.None())
+        if (list.Empty())
             return;
 
         int oldItemIndex = list.FindIndex(oldItemSelector);
@@ -52,7 +52,7 @@ public static class ListExtension
     /// </summary>
     public static void RemoveFromList<T>(this IList<T> list, IList<T> toRemove)
     {
-        if (list.None())
+        if (list.Empty())
             return;
 
         foreach (T item in toRemove)
