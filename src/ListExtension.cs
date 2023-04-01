@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Security.Cryptography;
 using Soenneker.Extensions.Enumerable;
 using Soenneker.Utils.Random;
@@ -87,5 +89,14 @@ public static class ListExtension
             int k = RandomNumberGenerator.GetInt32(n--);
             (list[n], list[k]) = (list[k], list[n]);
         }
+    }
+
+    [Pure]
+    public static T GetRandom<T>(this IList<T> list)
+    {
+        int index = RandomUtil.Next(0, list.Count);
+
+        T result = list[index];
+        return result;
     }
 }
