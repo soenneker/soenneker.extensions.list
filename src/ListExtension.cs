@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Security.Cryptography;
 using Soenneker.Extensions.Enumerable;
 using Soenneker.Utils.Random;
@@ -52,7 +51,7 @@ public static class ListExtension
     /// <summary>
     /// Simple foreach over toRemove list, removing each from the target
     /// </summary>
-    public static void RemoveFromList<T>(this IList<T> list, IList<T> toRemove)
+    public static void RemoveFromList<T>(this IList<T> list, IEnumerable<T> toRemove)
     {
         if (list.Empty())
             return;
@@ -66,8 +65,11 @@ public static class ListExtension
     /// <summary>
     /// Shuffles the list using a random number. Not cryptographically strong, but thread safe.
     /// </summary>
-    public static void Shuffle<T>(this IList<T> list)
+    public static void Shuffle<T>(this IList<T>? list)
     {
+        if (list.IsNullOrEmpty())
+            return;
+
         int n = list.Count;
 
         while (n > 1)
@@ -80,8 +82,11 @@ public static class ListExtension
     /// <summary>
     /// Shuffles the list using a cryptographically strong number.
     /// </summary>
-    public static void SecureShuffle<T>(this IList<T> list)
+    public static void SecureShuffle<T>(this IList<T>? list)
     {
+        if (list.IsNullOrEmpty())
+            return;
+
         int n = list.Count;
 
         while (n > 1)
@@ -92,8 +97,11 @@ public static class ListExtension
     }
 
     [Pure]
-    public static T GetRandom<T>(this IList<T> list)
+    public static T? GetRandom<T>(this IList<T>? list)
     {
+        if (list.IsNullOrEmpty())
+            return default;
+
         int index = RandomUtil.Next(0, list.Count);
 
         T result = list[index];
