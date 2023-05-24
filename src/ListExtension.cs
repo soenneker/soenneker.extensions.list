@@ -67,7 +67,7 @@ public static class ListExtension
     /// </summary>
     public static void Shuffle<T>(this IList<T>? list)
     {
-        if (list.IsNullOrEmpty())
+        if (list == null || list.Count < 2)
             return;
 
         int n = list.Count;
@@ -84,7 +84,7 @@ public static class ListExtension
     /// </summary>
     public static void SecureShuffle<T>(this IList<T>? list)
     {
-        if (list.IsNullOrEmpty())
+        if (list == null || list.Count < 2)
             return;
 
         int n = list.Count;
@@ -101,6 +101,9 @@ public static class ListExtension
     {
         if (list.IsNullOrEmpty())
             return default;
+
+        if (list.Count == 1)
+            return list[0];
 
         int index = RandomUtil.Next(0, list.Count);
 
