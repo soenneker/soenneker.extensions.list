@@ -49,17 +49,26 @@ public static class ListExtension
     }
 
     /// <summary>
-    /// Simple foreach over toRemove list, removing each from the target
+    /// Simple foreach over toRemove list, removing each from the target. This method is safe; no exceptions will be thrown if either list is null or empty.
     /// </summary>
-    public static void RemoveFromList<T>(this IList<T> list, IEnumerable<T> toRemove)
+    public static void RemoveEnumerableFromList<T>(this IList<T>? list, IEnumerable<T>? toRemove)
     {
-        if (list.Empty())
+        if (list.IsNullOrEmpty())
+            return;
+
+        if (toRemove.IsNullOrEmpty())
             return;
 
         foreach (T item in toRemove)
         {
             list.Remove(item);
         }
+    }
+
+    /// <inheritdoc cref="RemoveEnumerableFromList{T}"/>
+    public static void RemoveFromList<T>(this IList<T> list, params T[] toRemove)
+    {
+        RemoveEnumerableFromList(list, toRemove);
     }
 
     /// <summary>
