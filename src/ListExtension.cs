@@ -47,7 +47,7 @@ public static class ListExtension
         if (oldItemIndex != -1)
             list.RemoveAt(oldItemIndex);
     }
-    
+
     /// <summary>
     /// Shuffles the list using a random number. Not cryptographically strong, but thread safe.
     /// </summary>
@@ -94,6 +94,25 @@ public static class ListExtension
         int index = RandomUtil.Next(0, list.Count);
 
         T result = list[index];
+        return result;
+    }
+
+    /// <summary>
+    /// Converts an <see cref="IList{T}"/> to a <see cref="HashSet{T}"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the list.</typeparam>
+    /// <param name="list">The list to convert. If null, an empty <see cref="HashSet{T}"/> is returned.</param>
+    /// <returns>A <see cref="HashSet{T}"/> containing the elements of the list.</returns>
+    [Pure]
+    public static HashSet<T> ToHashSet<T>(this IList<T> list)
+    {
+        var result = new HashSet<T>(list.Count);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            result.Add(list[i]);
+        }
+
         return result;
     }
 }
