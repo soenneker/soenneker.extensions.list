@@ -38,6 +38,6 @@
         <None Include="..\icon.png" Pack="true" PackagePath="\" />
 
         
-        <PackageReference Include="Soenneker.Extensions.Enumerable" Version="3.0.251" />
+        <PackageReference Include="Soenneker.Extensions.Enumerable" Version="3.0.252" />
     </ItemGroup>
 </Project>
