@@ -21,12 +21,12 @@ public static class ListExtension
         //if list contains multiple items that match the predicate
         //or check for nullability of list and etc ...
 
-        if (list.Empty())
+        if (list is null || list.Count == 0)
             return;
 
         int oldItemIndex = list.FindIndex(oldItemSelector);
 
-        if (oldItemIndex != -1)
+        if (oldItemIndex >= 0)
             list[oldItemIndex] = newItem;
     }
 
@@ -39,12 +39,12 @@ public static class ListExtension
         //if list contains multiple items that match the predicate
         //or check for nullability of list and etc ...
 
-        if (list.Empty())
+        if (list is null || list.Count == 0)
             return;
 
         int oldItemIndex = list.FindIndex(oldItemSelector);
 
-        if (oldItemIndex != -1)
+        if (oldItemIndex >= 0)
             list.RemoveAt(oldItemIndex);
     }
 
@@ -60,7 +60,8 @@ public static class ListExtension
 
         while (n > 1)
         {
-            int k = RandomUtil.Next(n--);
+            int k = RandomUtil.Next(n);
+            n--;
             (list[n], list[k]) = (list[k], list[n]);
         }
     }
@@ -77,7 +78,8 @@ public static class ListExtension
 
         while (n > 1)
         {
-            int k = RandomNumberGenerator.GetInt32(n--);
+            int k = RandomNumberGenerator.GetInt32(n);
+            n--;
             (list[n], list[k]) = (list[k], list[n]);
         }
     }
@@ -85,16 +87,18 @@ public static class ListExtension
     [Pure]
     public static T? GetRandom<T>(this IList<T>? list)
     {
-        if (list.IsNullOrEmpty())
-            return default;
+        if (list != null && list.Count > 0)
+        {
+            // If there's exactly one item, return it
+            if (list.Count == 1)
+                return list[0];
 
-        if (list.Count == 1)
-            return list[0];
+            // Otherwise, return a random item
+            return list[RandomUtil.Next(0, list.Count)];
+        }
 
-        int index = RandomUtil.Next(0, list.Count);
-
-        T result = list[index];
-        return result;
+        // Return default value if list is null or empty
+        return default;
     }
 
     /// <summary>
@@ -106,13 +110,9 @@ public static class ListExtension
     [Pure]
     public static HashSet<T> ToHashSet<T>(this IList<T> list)
     {
-        var result = new HashSet<T>(list.Count);
+        if (list is null || list.Count == 0)
+            return [];
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            result.Add(list[i]);
-        }
-
-        return result;
+        return [..list];
     }
 }
