@@ -53,7 +53,7 @@ public static class ListExtension
     /// </summary>
     public static void Shuffle<T>(this IList<T>? list)
     {
-        if (list == null || list.Count < 2)
+        if (list is null || list.Count < 2)
             return;
 
         int n = list.Count;
@@ -71,7 +71,7 @@ public static class ListExtension
     /// </summary>
     public static void SecureShuffle<T>(this IList<T>? list)
     {
-        if (list == null || list.Count < 2)
+        if (list is null || list.Count < 2)
             return;
 
         int n = list.Count;
