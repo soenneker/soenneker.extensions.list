@@ -87,7 +87,7 @@ public static class ListExtension
     [Pure]
     public static T? GetRandom<T>(this IList<T>? list)
     {
-        if (list != null && list.Count > 0)
+        if (list is not null && list.Count > 0)
         {
             // If there's exactly one item, return it
             if (list.Count == 1)
