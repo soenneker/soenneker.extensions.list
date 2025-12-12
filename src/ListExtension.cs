@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
@@ -112,6 +112,11 @@ public static class ListExtension
         if (list is null || list.Count == 0)
             return [];
 
-        return [..list];
+        var result = new HashSet<T>(list.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            result.Add(list[i]);
+        }
+        return result;
     }
 }
