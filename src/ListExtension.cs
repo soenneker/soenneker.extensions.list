@@ -81,7 +81,7 @@ public static class ListExtension
                 int last = span.Length - 1;
 
                 if (i < last)
-                    span.Slice(i, last - i).CopyTo(span.Slice(i + 1));
+                    span.Slice(i + 1, last - i).CopyTo(span.Slice(i));
 
                 list.RemoveAt(last);
                 return;

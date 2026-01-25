@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using Soenneker.Tests.Unit;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public class ListExtensionTests : UnitTest
 
         list.Replace(x => x == 2, 9);
 
-        Assert.Equal(new List<int> { 1, 9, 2, 3 }, list);
+        list.Should().BeEquivalentTo(new List<int> { 1, 9, 2, 3 }, options => options.WithStrictOrdering());
     }
 
     [Fact]
@@ -30,7 +31,7 @@ public class ListExtensionTests : UnitTest
 
         list.Replace(x => x == 4, 9);
 
-        Assert.Equal(new List<int> { 1, 2, 3 }, list);
+        list.Should().BeEquivalentTo(new List<int> { 1, 2, 3 }, options => options.WithStrictOrdering());
     }
 
     [Fact]
@@ -38,7 +39,9 @@ public class ListExtensionTests : UnitTest
     {
         List<int>? list = null;
 
-        list.Replace(null!, 9);
+        Action action = () => list.Replace(null!, 9);
+
+        action.Should().NotThrow();
     }
 
     [Fact]
@@ -46,9 +49,10 @@ public class ListExtensionTests : UnitTest
     {
         var list = new List<int>();
 
-        list.Replace(null!, 9);
+        Action action = () => list.Replace(null!, 9);
 
-        Assert.Empty(list);
+        action.Should().NotThrow();
+        list.Should().BeEmpty();
     }
 
     [Fact]
@@ -56,6 +60,59 @@ public class ListExtensionTests : UnitTest
     {
         var list = new List<int> { 1 };
 
-        Assert.Throws<ArgumentNullException>(() => list.Replace(null!, 9));
+        Action action = () => list.Replace(null!, 9);
+
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void Remove_Removes_First_Match_Only()
+    {
+        var list = new List<int> { 1, 2, 2, 3 };
+
+        list.Remove(x => x == 2);
+
+        list.Should().BeEquivalentTo(new List<int> { 1, 2, 3 }, options => options.WithStrictOrdering());
+    }
+
+    [Fact]
+    public void Remove_Does_Nothing_When_No_Match()
+    {
+        var list = new List<int> { 1, 2, 3 };
+
+        list.Remove(x => x == 4);
+
+        list.Should().BeEquivalentTo(new List<int> { 1, 2, 3 }, options => options.WithStrictOrdering());
+    }
+
+    [Fact]
+    public void Remove_Does_Nothing_When_List_Is_Null()
+    {
+        List<int>? list = null;
+
+        Action action = () => list.Remove(null!);
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Remove_Does_Nothing_When_List_Is_Empty()
+    {
+        var list = new List<int>();
+
+        Action action = () => list.Remove(null!);
+
+        action.Should().NotThrow();
+        list.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void Remove_Throws_When_Match_Is_Null_And_List_Has_Items()
+    {
+        var list = new List<int> { 1 };
+
+        Action action = () => list.Remove(null!);
+
+        action.Should().Throw<ArgumentNullException>();
     }
 }
