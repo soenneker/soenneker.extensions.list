@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.Extensions.List.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.Extensions.List\Soenneker.Extensions.List.csproj" />
     </ItemGroup>
 
     <ItemGroup>
