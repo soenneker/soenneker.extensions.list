@@ -2,19 +2,18 @@ using AwesomeAssertions;
 using Soenneker.Tests.Unit;
 using System;
 using System.Collections.Generic;
-using Xunit;
 
 namespace Soenneker.Extensions.List.Tests;
 
 public class ListExtensionTests : UnitTest
 {
-    [Fact]
+    [Test]
     public void Default()
     {
 
     }
 
-    [Fact]
+    [Test]
     public void Replace_Replaces_First_Match_Only()
     {
         var list = new List<int> { 1, 2, 2, 3 };
@@ -24,7 +23,7 @@ public class ListExtensionTests : UnitTest
         list.Should().BeEquivalentTo(new List<int> { 1, 9, 2, 3 }, options => options.WithStrictOrdering());
     }
 
-    [Fact]
+    [Test]
     public void Replace_Does_Nothing_When_No_Match()
     {
         var list = new List<int> { 1, 2, 3 };
@@ -34,7 +33,7 @@ public class ListExtensionTests : UnitTest
         list.Should().BeEquivalentTo(new List<int> { 1, 2, 3 }, options => options.WithStrictOrdering());
     }
 
-    [Fact]
+    [Test]
     public void Replace_Does_Nothing_When_List_Is_Null()
     {
         List<int>? list = null;
@@ -44,7 +43,7 @@ public class ListExtensionTests : UnitTest
         action.Should().NotThrow();
     }
 
-    [Fact]
+    [Test]
     public void Replace_Does_Nothing_When_List_Is_Empty()
     {
         var list = new List<int>();
@@ -55,7 +54,7 @@ public class ListExtensionTests : UnitTest
         list.Should().BeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void Replace_Throws_When_Match_Is_Null_And_List_Has_Items()
     {
         var list = new List<int> { 1 };
@@ -65,7 +64,7 @@ public class ListExtensionTests : UnitTest
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void Remove_Removes_First_Match_Only()
     {
         var list = new List<int> { 1, 2, 2, 3 };
@@ -75,7 +74,7 @@ public class ListExtensionTests : UnitTest
         list.Should().BeEquivalentTo(new List<int> { 1, 2, 3 }, options => options.WithStrictOrdering());
     }
 
-    [Fact]
+    [Test]
     public void Remove_Does_Nothing_When_No_Match()
     {
         var list = new List<int> { 1, 2, 3 };
@@ -85,7 +84,7 @@ public class ListExtensionTests : UnitTest
         list.Should().BeEquivalentTo(new List<int> { 1, 2, 3 }, options => options.WithStrictOrdering());
     }
 
-    [Fact]
+    [Test]
     public void Remove_Does_Nothing_When_List_Is_Null()
     {
         List<int>? list = null;
@@ -95,7 +94,7 @@ public class ListExtensionTests : UnitTest
         action.Should().NotThrow();
     }
 
-    [Fact]
+    [Test]
     public void Remove_Does_Nothing_When_List_Is_Empty()
     {
         var list = new List<int>();
@@ -106,7 +105,7 @@ public class ListExtensionTests : UnitTest
         list.Should().BeEmpty();
     }
 
-    [Fact]
+    [Test]
     public void Remove_Throws_When_Match_Is_Null_And_List_Has_Items()
     {
         var list = new List<int> { 1 };
